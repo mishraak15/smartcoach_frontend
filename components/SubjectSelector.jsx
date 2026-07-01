@@ -104,10 +104,8 @@ export default function SubjectSelector({
     );
   }
 
-  // const subjectKeys = Object.keys(subjects);
-
   return (
-    <div className="max-w-4xl mx-auto py-3 px-6" id="selector-wrapper">
+    <div className="max-w-4xl mx-auto p-2 sm:py-3 sm:px-6 " id="selector-wrapper">
       <div className="text-center mb-4 border-b border-[#1A1A1A]/10">
         <span className="text-[10px] uppercase tracking-[0.25em] font-sans font-bold text-[#8C8C8C]">
           Assessment Modules / Official Revision
@@ -133,7 +131,7 @@ export default function SubjectSelector({
                 key={subj?.subject}
                 id={`subject-card-${subj?.subject?.toLowerCase()}`}
                 onClick={() => setSelectedSubject(subj?.subject)}
-                className="bg-[#FDFCFB] border border-[#1A1A1A]/10 p-6 cursor-pointer hover:bg-[#F5F2EE] hover:border-[#1A1A1A]/30 transition-all duration-300 relative group flex flex-col justify-between min-h-[220px]"
+                className="bg-[#FDFCFB] border border-[#1A1A1A]/10 p-4 sm:p-6 cursor-pointer hover:bg-[#F5F2EE] hover:border-[#1A1A1A]/30 transition-all duration-300 relative group flex flex-col justify-between min-h-[220px]"
               >
                 <div className="flex items-center justify-between">
                   <div className="p-2.5 bg-[#F5F2EE] border border-[#1A1A1A]/10 rounded-none">
@@ -159,10 +157,10 @@ export default function SubjectSelector({
         </div>
       ) : (
         <div
-          className="bg-[#FDFCFB] border border-[#1A1A1A]/10 p-8 mb-12"
+          className="bg-[#FDFCFB] border border-[#1A1A1A]/10 p-3 md:p-8 mb-5"
           id="topics-panel"
         >
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between border-b border-[#1A1A1A]/10 pb-6 mb-8 gap-4">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between border-b border-[#1A1A1A]/10 pb-6 mb-4 gap-4">
             <div className="flex items-center gap-4">
               <div className="p-3 bg-[#F5F2EE] border border-[#1A1A1A]/10">
                 {getSubjectIcon(selectedSubject)}
@@ -187,7 +185,7 @@ export default function SubjectSelector({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
             <div
               onClick={() => onSelectCategory(selectedSubject, null)}
-              className="flex items-center justify-between p-6 bg-[#1A1A1A] text-white cursor-pointer hover:bg-[#C2410C] transition duration-200 group"
+              className="flex items-center justify-between p-3 md:p-6 bg-[#1A1A1A] text-white cursor-pointer hover:bg-[#C2410C] transition duration-200 group"
               id="full-domain-test-btn"
             >
               <div>
@@ -210,7 +208,7 @@ export default function SubjectSelector({
               <div
                 key={t.topic}
                 onClick={() => onSelectCategory(selectedSubject, t.topic)}
-                className="flex items-center justify-between p-6 bg-[#FDFCFB] border border-[#1A1A1A]/10 hover:bg-[#F5F2EE] hover:border-[#1A1A1A]/30 cursor-pointer transition duration-200 group"
+                className="flex items-center justify-between p-3 md:p-6 bg-[#FDFCFB] border border-[#1A1A1A]/10 hover:bg-[#F5F2EE] hover:border-[#1A1A1A]/30 cursor-pointer transition duration-200 group"
               >
                 <div>
                   <span className="text-[9px] font-sans uppercase tracking-[0.2em] text-[#8C8C8C]">

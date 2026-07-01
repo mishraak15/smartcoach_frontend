@@ -36,6 +36,7 @@ export default function ScoreDashboard({
   const [aiAnalysis, setAiAnalysis] = useState(null);
   const [aiLoading, setAiLoading] = useState(false);
   const [aiError, setAiError] = useState(null);
+  console.log(responses);
 
   // Calculate score and accuracy
   const totalQuestions = questions.length;
@@ -48,13 +49,11 @@ export default function ScoreDashboard({
   ).length;
 
   const accuracyPercentage = ((correctCount / totalQuestions) * 100).toFixed(2);
-  const realAccuracyPercentage = (
-    (correctCount / attemptedCount) *
-    100
-  ).toFixed(2);
+  const realAccuracyPercentage =
+    attemptedCount > 0 ? ((correctCount / attemptedCount) * 100).toFixed(2) : '0.00';
 
   const requiredTimePerQuestion = 40;
-  const timeEfficiency = (durationSeconds / totalQuestions).toFixed(2);
+  const timeEfficiency = (durationSeconds / totalQuestions).toFixed(2) || 0;
 
   // Group by topics/subtopics to find performance metrics
   const topicStats = {};

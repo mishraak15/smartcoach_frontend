@@ -18,12 +18,19 @@ export default function QuizEngine({ subject, topic, onQuizComplete, onQuit }) {
   const [confirmQuit, setConfirmQuit] = useState(false);
   const maxTimePerQuestion = 60;
   const [maxTimeForTest, setMaxTimeForTest] = useState(maxTimePerQuestion);
+  const currentIndexRef = useRef(currentIndex);
+
+  useEffect(() => {
+    currentIndexRef.current = currentIndex;
+  }, [currentIndex]);
 
   // Timers
   const [totalTime, setTotalTime] = useState(0);
   const questionStartTimesRef = useRef({});
   const [questionTimeSpents, setQuestionTimeSpents] = useState({});
   const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
+
+  const handleSubmitQuizRef = useRef(null);
 
   useEffect(() => {
     let url = `${API_BASE_URL}/api/questions?subject=${encodeURIComponent(
@@ -70,7 +77,12 @@ export default function QuizEngine({ subject, topic, onQuizComplete, onQuit }) {
       setTotalTime((prev) => {
         if (prev <= 1) {
           clearInterval(interval);
-          handleSubmitQuiz();
+          // Auto-submit when time is up
+          setTimeout(() => {
+            if (handleSubmitQuizRef.current) {
+              handleSubmitQuizRef.current();
+            }
+          }, 0);
           return 0;
         }
         return prev - 1;
@@ -78,33 +90,22 @@ export default function QuizEngine({ subject, topic, onQuizComplete, onQuit }) {
 
       // Also increment current question time spent
       setQuestionTimeSpents((prev) => {
-        const currentSpent = prev[currentIndex] || 0;
+        const activeIndex = currentIndexRef.current;
+        const currentSpent = prev[activeIndex] || 0;
         return {
           ...prev,
-          [currentIndex]: currentSpent + 1,
+          [activeIndex]: currentSpent + 1,
         };
       });
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [loading, error, questions, currentIndex, confirmSubmit]);
+  }, [loading, error, questions, confirmSubmit]);
 
   // Handle switching questions
   const handleJumpToQuestion = (index) => {
     if (index === currentIndex) return;
 
-    const now = Date.now();
-    // Save current time spent on active question before leaving
-    const lastStart = questionStartTimesRef.current[currentIndex] || now;
-    const extraSeconds = Math.round((now - lastStart) / 1000);
-
-    setQuestionTimeSpents((prev) => ({
-      ...prev,
-      [currentIndex]: (prev[currentIndex] || 0) + extraSeconds,
-    }));
-
-    // Update new active question start time
-    questionStartTimesRef.current[index] = now;
     setCurrentIndex(index);
   };
 
@@ -135,16 +136,6 @@ export default function QuizEngine({ subject, topic, onQuizComplete, onQuit }) {
   };
 
   const handleSubmitQuiz = () => {
-    const now = Date.now();
-    const lastStart = questionStartTimesRef.current[currentIndex] || now;
-    const extraSeconds = Math.round((now - lastStart) / 1000);
-
-    const finalTimeSpents = {
-      ...questionTimeSpents,
-      [currentIndex]: (questionTimeSpents[currentIndex] || 0) + extraSeconds,
-    };
-
-    // Construct final user response map
     const finalResponses = {};
 
     questions.forEach((q, idx) => {
@@ -154,12 +145,14 @@ export default function QuizEngine({ subject, topic, onQuizComplete, onQuit }) {
         questionId: q.id,
         selectedOption: selected,
         isCorrect: isCorrect,
-        timeSpentSeconds: finalTimeSpents[idx] || 0,
+        timeSpentSeconds: questionTimeSpents[idx] || 0,
       };
     });
 
     onQuizComplete(finalResponses, questions, maxTimeForTest - totalTime);
   };
+
+  handleSubmitQuizRef.current = handleSubmitQuiz;
 
   const formatTime = (seconds) => {
     const min = Math.floor(seconds / 60);
