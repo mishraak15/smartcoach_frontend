@@ -73,7 +73,7 @@ export default function SubjectSelector({
   if (loading) {
     return (
       <div
-        className="flex flex-col items-center justify-center min-h-[400px]"
+        className="flex flex-col items-center justify-center min-h-100"
         id="loading-container"
       >
         <Loader className="w-8 h-8 text-[#8C8C8C] animate-spin mb-4" />
@@ -131,7 +131,7 @@ export default function SubjectSelector({
                 key={subj?.subject}
                 id={`subject-card-${subj?.subject?.toLowerCase()}`}
                 onClick={() => setSelectedSubject(subj?.subject)}
-                className="bg-[#FDFCFB] border border-[#1A1A1A]/10 p-4 sm:p-6 cursor-pointer hover:bg-[#F5F2EE] hover:border-[#1A1A1A]/30 transition-all duration-300 relative group flex flex-col justify-between min-h-[220px]"
+                className="bg-[#FDFCFB] border border-[#1A1A1A]/10 p-4 sm:p-6 cursor-pointer hover:bg-[#F5F2EE] hover:border-[#1A1A1A]/30 transition-all duration-300 relative group flex flex-col justify-between min-h-55"
               >
                 <div className="flex items-center justify-between">
                   <div className="p-2.5 bg-[#F5F2EE] border border-[#1A1A1A]/10 rounded-none">

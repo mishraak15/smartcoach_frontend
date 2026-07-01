@@ -169,7 +169,7 @@ export default function QuizEngine({ subject, topic, onQuizComplete, onQuit }) {
   if (loading) {
     return (
       <div
-        className="flex flex-col items-center justify-center min-h-[400px]"
+        className="flex flex-col items-center justify-center min-h-100"
         id="quiz-loading"
       >
         <Loader className="w-8 h-8 text-[#8C8C8C] animate-spin mb-4" />

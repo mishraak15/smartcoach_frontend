@@ -222,14 +222,14 @@ export default function AdminPortal({ onClose, onQuestionAdded }) {
               type="password"
               name="adminpass"
               id="adminpass"
-              className="py-2 px-4 border-2 text-sm border-gray-200 rounded-[2px] mt-3 outline-none placeholder:text-gray-900"
+              className="py-2 px-4 border-2 text-sm border-gray-200 rounded-xs mt-3 outline-none placeholder:text-gray-900"
               placeholder="Enter admin password"
               onInput={(e) => {
                 matchPass(e.target.value);
               }}
             />
             <button
-              className="outline-none py-1 px-8 cursor-pointer w-fit self-end bg-blue-200 hover:bg-blue-100 rounded-[2px] text-gray-700 border-[1px] border-blue-300"
+              className="outline-none py-1 px-8 cursor-pointer w-fit self-end bg-blue-200 hover:bg-blue-100 rounded-xs text-gray-700 border border-blue-300"
               onClick={() => matchPass(adminPass)}
             >
               Enter
@@ -528,7 +528,7 @@ export default function AdminPortal({ onClose, onQuestionAdded }) {
                     type="button"
                     onClick={handleGenerateAI}
                     disabled={generatingAi}
-                    className="flex items-center gap-1.5 text-xs font-semibold text-indigo-600 hover:text-indigo-700 bg-indigo-100 hover:bg-indigo-50 border-[1px] border-indigo-300 disabled:bg-slate-100 disabled:text-slate-400 px-2.5 py-1 rounded-sm transition border border-indigo-100/30 disabled:border-transparent cursor-pointer"
+                    className="flex items-center gap-1.5 text-xs font-semibold text-indigo-600 hover:text-indigo-700 bg-indigo-100 hover:bg-indigo-50 border disabled:bg-slate-100 disabled:text-slate-400 px-2.5 py-1 rounded-sm transition border-indigo-100/30 disabled:border-transparent cursor-pointer"
                   >
                     {generatingAi ? (
                       <>
