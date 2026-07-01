@@ -27,7 +27,6 @@ export default function SubjectSelector({
   useEffect(() => {
     fetch(`${API_BASE_URL}/api/categories`)
       .then((res) => {
-        console.log(res);
         if (!res.ok) throw new Error("Failed to load exam subjects.");
         res.json().then((result) => {
           setSubjects(result);

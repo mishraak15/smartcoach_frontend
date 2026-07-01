@@ -6,7 +6,6 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
-import { API_BASE_URL } from "../config.js";
 
 export default function QuizEngine({ subject, topic, onQuizComplete, onQuit }) {
   const [questions, setQuestions] = useState([]);
@@ -24,6 +23,7 @@ export default function QuizEngine({ subject, topic, onQuizComplete, onQuit }) {
   const [totalTime, setTotalTime] = useState(0);
   const questionStartTimesRef = useRef({});
   const [questionTimeSpents, setQuestionTimeSpents] = useState({});
+  const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     let url = `${API_BASE_URL}/api/questions?subject=${encodeURIComponent(
@@ -171,7 +171,6 @@ export default function QuizEngine({ subject, topic, onQuizComplete, onQuit }) {
     // IF success
     setConfirmQuit(false);
     onQuit();
-    e.target.dispaly = "none";
   };
 
   if (loading) {

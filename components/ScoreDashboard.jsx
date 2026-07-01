@@ -22,7 +22,6 @@ import {
   RefreshCw,
   Loader,
 } from "lucide-react";
-import { API_BASE_URL } from "../config.js";
 
 export default function ScoreDashboard({
   subject,
@@ -33,6 +32,7 @@ export default function ScoreDashboard({
   onRestart,
   onStartSuggestedQuiz,
 }) {
+  const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
   const [aiAnalysis, setAiAnalysis] = useState(null);
   const [aiLoading, setAiLoading] = useState(false);
   const [aiError, setAiError] = useState(null);
@@ -42,8 +42,6 @@ export default function ScoreDashboard({
   const correctCount = Object.values(responses).filter(
     (r) => r.isCorrect
   ).length;
-
-  console.log(responses);
 
   const attemptedCount = Object.values(responses).filter(
     (r) => r.selectedOption != null
@@ -607,7 +605,11 @@ export default function ScoreDashboard({
                   <div className="sm:w-[50%] w-full self-end flex gap-6 items-center justify-end">
                     <div
                       className={`flex items-center gap-2 font-mono text-xs font-bold p-2 md:px-4 border 
-                        ${resp.timeSpentSeconds > requiredTimePerQuestion ? "text-rose-600 bg-rose-50 border-rose-300" :"text-green-600 bg-green-50 border-green-300"}
+                        ${
+                          resp.timeSpentSeconds > requiredTimePerQuestion
+                            ? "text-rose-600 bg-rose-50 border-rose-300"
+                            : "text-green-600 bg-green-50 border-green-300"
+                        }
                         
                       }`}
                     >

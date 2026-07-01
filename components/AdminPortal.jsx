@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { X, Check, Database, Loader, Sparkles } from "lucide-react";
-import { API_BASE_URL } from "../config.js";
 
 export default function AdminPortal({ onClose, onQuestionAdded }) {
   const [adminPass, setAdminPass] = useState("");
@@ -22,6 +21,7 @@ export default function AdminPortal({ onClose, onQuestionAdded }) {
     explanation: "",
   });
 
+  const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
