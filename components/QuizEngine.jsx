@@ -34,7 +34,7 @@ export default function QuizEngine({ subject, topic, onQuizComplete, onQuit }) {
 
   useEffect(() => {
     let url = `${API_BASE_URL}/api/questions?subject=${encodeURIComponent(
-      subject
+      subject,
     )}`;
     if (topic) {
       url += `&topic=${encodeURIComponent(topic)}`;
@@ -44,13 +44,12 @@ export default function QuizEngine({ subject, topic, onQuizComplete, onQuit }) {
       .then((res) => {
         if (!res.ok)
           throw new Error(
-            "Could not find enough questions for this selection."
+            "Could not find enough questions for this selection.",
           );
         return res.json();
       })
       .then((data) => {
         setQuestions(data.questions);
-        setLoading(false);
         let maxTime = data.questions.length * maxTimePerQuestion;
         setMaxTimeForTest(maxTime);
         setTotalTime(maxTime);
@@ -61,6 +60,7 @@ export default function QuizEngine({ subject, topic, onQuizComplete, onQuit }) {
         data.questions.forEach((q, idx) => {
           initialTimes[idx] = idx === 0 ? now : 0;
         });
+        setLoading(false);
         questionStartTimesRef.current = initialTimes;
       })
       .catch((err) => {
@@ -209,7 +209,7 @@ export default function QuizEngine({ subject, topic, onQuizComplete, onQuit }) {
   const currentQuestion = questions[currentIndex];
   const totalQuestions = questions.length;
   const answeredCount = Object.values(selectedAnswers).filter(
-    (ans) => ans !== null
+    (ans) => ans !== null,
   ).length;
 
   return (
@@ -360,8 +360,8 @@ export default function QuizEngine({ subject, topic, onQuizComplete, onQuit }) {
                     currentQuestion.difficulty === "Easy"
                       ? "bg-emerald-50 text-emerald-800 border-emerald-200"
                       : currentQuestion.difficulty === "Medium"
-                      ? "bg-amber-50 text-amber-800 border-amber-200"
-                      : "bg-rose-50 text-rose-800 border-rose-200"
+                        ? "bg-amber-50 text-amber-800 border-amber-200"
+                        : "bg-rose-50 text-rose-800 border-rose-200"
                   }`}
                 >
                   {currentQuestion.difficulty}
@@ -396,8 +396,8 @@ export default function QuizEngine({ subject, topic, onQuizComplete, onQuit }) {
                       isSelected
                         ? "bg-[#1A1A1A] text-white border-[#1A1A1A]"
                         : isAnswered
-                        ? "bg-green-200 text-[#1A1A1A] border-green-300 hover:border-green-400"
-                        : "bg-[#FDFCFB] text-[#8C8C8C] border-[#1A1A1A]/10 hover:bg-[#F5F2EE]"
+                          ? "bg-green-200 text-[#1A1A1A] border-green-300 hover:border-green-400"
+                          : "bg-[#FDFCFB] text-[#8C8C8C] border-[#1A1A1A]/10 hover:bg-[#F5F2EE]"
                     }`}
                   >
                     {idx + 1}
