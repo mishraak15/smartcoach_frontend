@@ -264,7 +264,7 @@ export default function QuizEngine({
             }`}
           >
             <Clock className="w-3.5 h-3.5 text-[#C2410C]" />
-            <span>ELAPSED: {formatTime(totalTime)}</span>
+            <span>REMAINING: {formatTime(totalTime)}</span>
           </div>
           <button
             onClick={() => setConfirmSubmit(true)}

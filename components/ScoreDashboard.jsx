@@ -22,6 +22,7 @@ import {
   RefreshCw,
   Loader,
 } from "lucide-react";
+import { NavLink } from "react-router-dom";
 
 export default function ScoreDashboard({
   subject,
@@ -40,16 +41,18 @@ export default function ScoreDashboard({
   // Calculate score and accuracy
   const totalQuestions = questions.length;
   const correctCount = Object.values(responses).filter(
-    (r) => r.isCorrect
+    (r) => r.isCorrect,
   ).length;
 
   const attemptedCount = Object.values(responses).filter(
-    (r) => r.selectedOption != null
+    (r) => r.selectedOption != null,
   ).length;
 
   const accuracyPercentage = ((correctCount / totalQuestions) * 100).toFixed(2);
   const realAccuracyPercentage =
-    attemptedCount > 0 ? ((correctCount / attemptedCount) * 100).toFixed(2) : '0.00';
+    attemptedCount > 0
+      ? ((correctCount / attemptedCount) * 100).toFixed(2)
+      : "0.00";
 
   const requiredTimePerQuestion = 40;
   const timeEfficiency = (durationSeconds / totalQuestions).toFixed(2) || 0;
@@ -166,7 +169,7 @@ export default function ScoreDashboard({
   const scoreMessage = getScoreMessage();
 
   return (
-    <div className="max-w-5xl mx-auto py-10 px-6" id="scorecard-wrapper">
+    <div className="max-w-5xl mx-auto py-6 px-3 sm:p-5" id="scorecard-wrapper">
       {/* Top Welcome Title */}
       <div
         className="flex flex-col md:flex-row items-start md:items-end justify-between gap-6 border-b border-[#1A1A1A]/10 pb-8 mb-8"
@@ -202,8 +205,8 @@ export default function ScoreDashboard({
             accuracyPercentage >= 75
               ? "bg-green-100 border-green-200"
               : accuracyPercentage >= 50
-              ? "bg-yellow-100 border-yellow-200"
-              : "bg-red-100 border-red-200"
+                ? "bg-yellow-100 border-yellow-200"
+                : "bg-red-100 border-red-200"
           }  border  px-4 py-3 flex items-center gap-5`}
         >
           <div
@@ -211,8 +214,8 @@ export default function ScoreDashboard({
               accuracyPercentage >= 75
                 ? "bg-green-200 border-green-300 text-green-600"
                 : accuracyPercentage >= 50
-                ? "bg-yellow-200 border-yellow-300 text-yellow-600"
-                : "bg-red-200 border-red-300 text-red-600"
+                  ? "bg-yellow-200 border-yellow-300 text-yellow-600"
+                  : "bg-red-200 border-red-300 text-red-600"
             } p-3  rounded-sm`}
           >
             <Award className="w-6 h-6" />
@@ -240,8 +243,8 @@ export default function ScoreDashboard({
             realAccuracyPercentage >= 75
               ? "bg-green-100 border-green-200"
               : realAccuracyPercentage >= 50
-              ? "bg-yellow-100 border-yellow-200"
-              : "bg-red-100 border-red-200"
+                ? "bg-yellow-100 border-yellow-200"
+                : "bg-red-100 border-red-200"
           }  border  px-4  py-3 flex items-center gap-5`}
         >
           <div
@@ -249,8 +252,8 @@ export default function ScoreDashboard({
               realAccuracyPercentage >= 75
                 ? "bg-green-200 border-green-300 text-green-600"
                 : realAccuracyPercentage >= 50
-                ? "bg-yellow-200 border-yellow-300 text-yellow-600"
-                : "bg-red-200 border-red-300 text-red-600"
+                  ? "bg-yellow-200 border-yellow-300 text-yellow-600"
+                  : "bg-red-200 border-red-300 text-red-600"
             } p-3  rounded-sm`}
           >
             <CheckCircle2 className="w-6 h-6" />
@@ -273,8 +276,8 @@ export default function ScoreDashboard({
             timeEfficiency < requiredTimePerQuestion
               ? "bg-green-100 border-green-200"
               : timeEfficiency == requiredTimePerQuestion
-              ? "bg-yellow-100 border-yellow-200"
-              : "bg-red-100 border-red-200"
+                ? "bg-yellow-100 border-yellow-200"
+                : "bg-red-100 border-red-200"
           }  border px-4 py-3 flex items-center gap-5`}
         >
           <div
@@ -282,8 +285,8 @@ export default function ScoreDashboard({
               timeEfficiency < requiredTimePerQuestion
                 ? "bg-green-200 border-green-300 text-green-600"
                 : timeEfficiency == requiredTimePerQuestion
-                ? "bg-yellow-200 border-yellow-300 text-yellow-600"
-                : "bg-red-200 border-red-300 text-red-600"
+                  ? "bg-yellow-200 border-yellow-300 text-yellow-600"
+                  : "bg-red-200 border-red-300 text-red-600"
             } p-3  rounded-sm`}
           >
             <Clock className="w-6 h-6" />
@@ -304,7 +307,7 @@ export default function ScoreDashboard({
 
       {/* Feedback Badge and Suggestive Guidance */}
       <div
-        className={`p-6 border ${scoreMessage.color} mb-10 flex items-start gap-4`}
+        className={`p-6 border ${scoreMessage.color} mb-4 flex items-start gap-4`}
         id="coaching-feedback"
       >
         <Bookmark className="w-5 h-5 shrink-0 text-[#1A1A1A] mt-0.5" />
@@ -315,6 +318,64 @@ export default function ScoreDashboard({
           <p className="text-xs text-[#555] font-sans leading-relaxed">
             {scoreMessage.desc}
           </p>
+        </div>
+      </div>
+
+      <div
+        className="bg-[#FDFCFB] border border-[#1A1A1A]/10 sm:p-5 p-2 mb-4"
+        id="quiz-navigation-grid"
+      >
+        <h3 className="font-sans text-[11px] uppercase tracking-[0.2em] font-bold text-[#8C8C8C] mb-4">
+          Test Ledger
+        </h3>
+        <div
+          className="grid grid-cols-7 sm:grid-cols-10 md:grid-cols-15 gap-2 mb-3 "
+          id="nav-btn-grid"
+        >
+          {questions.map((q, idx) => {
+            const resp = responses[q.id];
+            const isCorrect = resp?.isCorrect || false;
+            const selected = resp?.selectedOption;
+
+            return (
+              <button
+                key={idx}
+                onClick={() => {
+                  document
+                    .getElementById(`ques-${q.id}`)
+                    ?.scrollIntoView({ behavior: "smooth" });
+                }}
+                className={`w-9 h-9 font-mono text-[#1A1A1A] text-xs font-bold flex items-center justify-center transition border cursor-pointer ${
+                  !selected
+                    ? "bg-[#2e2e2e] border-[#1f1f1f] text-white hover:border-black"
+                    : isCorrect
+                      ? "bg-green-200 border-green-300 hover:border-green-400"
+                      : "bg-red-200 border-red-300 hover:border-red-400"
+                }`}
+              >
+                {idx + 1}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Legend indicators */}
+        <div
+          className="gap-4 space-y-2.5 border-t border-[#1A1A1A]/10 pt-4 font-sans"
+          id="nav-legend"
+        >
+          <div className="flex items-center text-[10px] uppercase tracking-wider text-[#555] gap-2">
+            <span className="w-3 h-3 bg-green-200 border border-green-300" />
+            Correct
+          </div>
+          <div className="flex items-center text-[10px] uppercase tracking-wider text-[#555] gap-2">
+            <span className="w-3 h-3 bg-red-200 border border-red-300" />
+            Incorrect
+          </div>
+          <div className="flex items-center text-[10px] uppercase tracking-wider text-[#555] gap-2">
+            <span className="w-3 h-3 text-white bg-[#2e2e2e] border border-[#1A1A1A]/10" />
+            Unattempted
+          </div>
         </div>
       </div>
 
@@ -380,8 +441,8 @@ export default function ScoreDashboard({
                       entry.accuracy >= 70
                         ? "#1A1A1A"
                         : entry.accuracy >= 40
-                        ? "#C2410C"
-                        : "#8C8C8C";
+                          ? "#C2410C"
+                          : "#8C8C8C";
                     return <Cell key={`cell-${index}`} fill={color} />;
                   })}
                 </Bar>
@@ -583,6 +644,7 @@ export default function ScoreDashboard({
               <div
                 key={q.id}
                 className="bg-[#FDFCFB] border border-[#1A1A1A]/10 p-3 md:p-8 relative overflow-hidden"
+                id={`ques-${q.id}`}
               >
                 {/* Visual side band for pass/fail */}
                 <div
@@ -643,12 +705,12 @@ export default function ScoreDashboard({
                         option == selected && isCorrect
                           ? "bg-green-100 border-green-200 text-[#1A1A1A]"
                           : option == selected &&
-                            !isCorrect &&
-                            resp?.selectedOption
-                          ? "bg-red-100 border-red-300 text-[#C2410C]"
-                          : option == q.correctOption
-                          ? "border-green-300"
-                          : "border border-[#1A1A1A]/15 bg-[#F5F2EE]/50 text-[#1A1A1A]"
+                              !isCorrect &&
+                              resp?.selectedOption
+                            ? "bg-red-100 border-red-300 text-[#C2410C]"
+                            : option == q.correctOption
+                              ? "border-green-300"
+                              : "border border-[#1A1A1A]/15 bg-[#F5F2EE]/50 text-[#1A1A1A]"
                       }`}
                     >
                       {(option == q.correctOption || option == selected) && (
