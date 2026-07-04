@@ -280,7 +280,7 @@ export default function QuizEngine({
         id="quiz-main-grid"
       >
         {/* Left/Middle: Question & Answer Option Card */}
-        <div className="lg:col-span-3 flex flex-col gap-6">
+        <div className="lg:col-span-3 flex flex-col gap-6 h-fit">
           <div
             className="bg-[#FDFCFB] border border-[#1A1A1A]/10 p-6 md:p-4 flex-1 flex flex-col justify-between"
             id="question-card"
