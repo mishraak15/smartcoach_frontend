@@ -7,7 +7,13 @@ import {
   ChevronRight,
 } from "lucide-react";
 
-export default function QuizEngine({ subject, topic, onQuizComplete, onQuit }) {
+export default function QuizEngine({
+  subject,
+  topic,
+  onQuizComplete,
+  onQuit,
+  tenQuesMode = true,
+}) {
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -38,6 +44,9 @@ export default function QuizEngine({ subject, topic, onQuizComplete, onQuit }) {
     )}`;
     if (topic) {
       url += `&topic=${encodeURIComponent(topic)}`;
+    }
+    if (!tenQuesMode) {
+      url += `&ques=${encodeURIComponent("all")}`;
     }
 
     fetch(url)

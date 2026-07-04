@@ -22,6 +22,8 @@ export default function App() {
   const [isAdminOpen, setIsAdminOpen] = useState(false);
   const [dbRefreshTrigger, setDbRefreshTrigger] = useState(0);
 
+  const [tenQuesMode, setTenQuesMode] = useState(true);
+
   const handleSelectCategory = (subject, topic) => {
     setSelectedSubject(subject);
     setSelectedTopic(topic);
@@ -63,12 +65,15 @@ export default function App() {
         className="bg-[#FDFCFB] border-b border-[#1A1A1A]/10 sticky top-0 z-40"
         id="main-header"
       >
-            <div className="max-w-6xl mx-auto px-2 sm:px-6 py-2 flex items-center gap-2 cursor-pointer" onClick={handleRestart}>
-              <Brain className="w-6 h-6 text-[#1A1A1A] stroke-[1.5]" />
-              <h1 className="text-3xl font-light tracking-tight italic font-serif text-[#1A1A1A]">
-                SmartCoach
-              </h1>
-            </div>
+        <div
+          className="max-w-6xl mx-auto px-2 sm:px-6 py-2 flex items-center gap-2 cursor-pointer"
+          onClick={handleRestart}
+        >
+          <Brain className="w-6 h-6 text-[#1A1A1A] stroke-[1.5]" />
+          <h1 className="text-3xl font-light tracking-tight italic font-serif text-[#1A1A1A]">
+            SmartCoach
+          </h1>
+        </div>
       </header>
 
       {/* Main Content Stage */}
@@ -86,8 +91,10 @@ export default function App() {
               <SubjectSelector
                 onSelectCategory={handleSelectCategory}
                 onOpenAdmin={() => setIsAdminOpen(true)}
-                selectedSubject = {selectedSubject}
+                selectedSubject={selectedSubject}
                 setSelectedSubject={setSelectedSubject}
+                tenQuesMode={tenQuesMode}
+                setTenQuesMode={setTenQuesMode}
               />
             </motion.div>
           )}
@@ -106,6 +113,7 @@ export default function App() {
                 topic={selectedTopic}
                 onQuizComplete={handleQuizComplete}
                 onQuit={handleRestart}
+                tenQuesMode={tenQuesMode}
               />
             </motion.div>
           )}
@@ -126,7 +134,7 @@ export default function App() {
                 responses={userResponses}
                 durationSeconds={quizDuration}
                 onRestart={handleRestart}
-                onStartSuggestedQuiz={handleStartSuggestedQuiz} 
+                onStartSuggestedQuiz={handleStartSuggestedQuiz}
               />
             </motion.div>
           )}

@@ -36,7 +36,6 @@ export default function ScoreDashboard({
   const [aiAnalysis, setAiAnalysis] = useState(null);
   const [aiLoading, setAiLoading] = useState(false);
   const [aiError, setAiError] = useState(null);
-  console.log(responses);
 
   // Calculate score and accuracy
   const totalQuestions = questions.length;

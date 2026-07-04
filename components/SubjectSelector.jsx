@@ -15,6 +15,8 @@ export default function SubjectSelector({
   onOpenAdmin,
   selectedSubject,
   setSelectedSubject,
+  tenQuesMode,
+  setTenQuesMode,
 }) {
   const [subjects, setSubjects] = useState([{}]);
 
@@ -47,6 +49,7 @@ export default function SubjectSelector({
           if (!res.ok) throw new Error("Failed to load topics.");
           res.json().then((result) => {
             setTopics(result);
+            setTenQuesMode(true);
             setLoading(false);
           });
         })
@@ -105,7 +108,10 @@ export default function SubjectSelector({
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-2 sm:py-3 sm:px-6 " id="selector-wrapper">
+    <div
+      className="max-w-4xl mx-auto p-2 sm:py-3 sm:px-6 "
+      id="selector-wrapper"
+    >
       <div className="text-center mb-4 border-b border-[#1A1A1A]/10">
         <span className="text-[10px] uppercase tracking-[0.25em] font-sans font-bold text-[#8C8C8C]">
           Assessment Modules / Official Revision
@@ -174,12 +180,20 @@ export default function SubjectSelector({
                 </h2>
               </div>
             </div>
-            <button
-              onClick={() => setSelectedSubject(null)}
-              className="font-sans text-[10px] uppercase tracking-widest font-bold border border-[#1A1A1A]/20 hover:border-[#1A1A1A] hover:bg-[#F5F2EE] text-[#555] hover:text-[#1A1A1A] px-4 py-2 transition self-start sm:self-auto cursor-pointer"
-            >
-              ← All Modules
-            </button>
+            <div className="flex flex-col gap-2">
+              <button
+                onClick={() => setSelectedSubject(null)}
+                className="font-sans text-[10px] uppercase tracking-widest font-bold border border-[#1A1A1A]/20 hover:border-[#1A1A1A] hover:bg-[#F5F2EE] text-[#555] hover:text-[#1A1A1A] px-4 py-2 transition self-start sm:self-auto cursor-pointer"
+              >
+                ← All Modules
+              </button>
+              <button
+                onClick={() => setTenQuesMode((pre) => !pre)}
+                className={`font-sans text-[10px] uppercase tracking-widest font-bold border border-[#1A1A1A]/20  text-[#555]  px-4 py-2 transition self-start sm:self-auto duration-200 cursor-pointer ${tenQuesMode ? "bg-[#C2410C] text-white" : "hover:text-[#1A1A1A] hover:border-[#1A1A1A] hover:bg-[#F5F2EE]"} `}
+              >
+                10 Ques Mode
+              </button>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
